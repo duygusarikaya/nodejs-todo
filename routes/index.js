@@ -41,7 +41,7 @@ var todos = require('../controllers/todoController');
  * /api/users:
  *   get:
  *     tags:
- *       - users
+ *       - dev
  *     description: Returns all users
  *     produces:
  *       - application/json
@@ -51,11 +51,27 @@ var todos = require('../controllers/todoController');
  *         schema:
  *           $ref: '#/definitions/User'
  */
-router.get('/api/users', users.get_all);
+router.get('/api/users', users.get_god_mode);
+/**
+ * @swagger
+ * /api/todos:
+ *   get:
+ *     tags:
+ *       - dev
+ *     description: Returns all todos
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of todos
+ *         schema:
+ *           $ref: '#/definitions/Todo'
+ */
+router.get('/api/users', todos.get_god_mode);
 
 /**
  * @swagger
- * /api/users:
+ * /api/register:
  *   post:
  *     tags:
  *       - users
@@ -72,8 +88,34 @@ router.get('/api/users', users.get_all);
  *     responses:
  *       200:
  *         description: Successfully created
+ *       401:
+ *         description: Failed register
  */
-router.post('/api/users', users.add);
+router.post('/api/register', users.add);
+
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     tags:
+ *       - users
+ *     description: Login for a user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: User object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *       401:
+ *         description: Failed login
+ */
+router.post('/api/login', users.login);
 
 
 /**
@@ -81,7 +123,7 @@ router.post('/api/users', users.add);
  * /api/users/{id}/todos:
  *   get:
  *     tags:
- *       - users
+ *       - users/todos
  *     description: Returns all todos of the user
  *     produces:
  *       - application/json
@@ -91,11 +133,18 @@ router.post('/api/users', users.add);
  *         in: path
  *         required: true
  *         type: String
+ *       - name: Authorization
+ *         description: apikey
+ *         in: header
+ *         required: true
+ *         type: apiKey
  *     responses:
  *       200:
  *         description: An array of users' todos
  *         schema:
  *           $ref: '#/definitions/User'
+ *       401:
+ *         description: Unauthorized
  */
 router.get('/api/users/:id/todos', todos.get_all);
 
@@ -104,7 +153,7 @@ router.get('/api/users/:id/todos', todos.get_all);
  * /api/users/{id}/todos:
  *   post:
  *     tags:
- *       - users
+ *       - users/todos
  *     description: Creates a new todo entry
  *     produces:
  *       - application/json
@@ -115,9 +164,21 @@ router.get('/api/users/:id/todos', todos.get_all);
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Todo'
+ *       - name: id
+ *         description: user's id
+ *         in: path
+ *         required: true
+ *         type: String
+ *       - name: Authorization
+ *         description: apikey
+ *         in: header
+ *         required: true
+ *         type: apiKey
  *     responses:
  *       200:
  *         description: Successfully created
+ *       401:
+ *         description: Unauthorized
  */
 router.post('/api/users/:id/todos', todos.add);
 
@@ -136,11 +197,18 @@ router.post('/api/users/:id/todos', todos.add);
  *         in: path
  *         required: true
  *         type: String
+ *       - name: Authorization
+ *         description: apikey
+ *         in: header
+ *         required: true
+ *         type: apiKey
  *     responses:
  *       200:
  *         description: A single todo entry
  *         schema:
  *           $ref: '#/definitions/Todo'
+ *       401:
+ *         description: Unauthorized
  */
 router.get('/api/todos/:id', todos.get);
 
@@ -165,9 +233,16 @@ router.get('/api/todos/:id', todos.get);
  *         required: true
  *         schema:
  *           $ref: '#/definitions/Todo'
+ *       - name: Authorization
+ *         description: apikey
+ *         in: header
+ *         required: true
+ *         type: apiKey
  *     responses:
  *       200:
  *         description: Successfully updated
+ *       401:
+ *         description: Unauthorized
  */
 router.put('/api/todos/:id', todos.update);
 
@@ -186,9 +261,16 @@ router.put('/api/todos/:id', todos.update);
  *         in: path
  *         required: true
  *         type: String
+ *       - name: Authorization
+ *         description: apikey
+ *         in: header
+ *         required: true
+ *         type: apiKey
  *     responses:
  *       200:
  *         description: Successfully deleted
+ *       401:
+ *         description: Unauthorized
  */
 router.delete('/api/todos/:id', todos.delete);
 

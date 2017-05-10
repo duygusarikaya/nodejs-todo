@@ -1,4 +1,7 @@
 var express = require('express');
+var session = require('express-session');
+var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo');
 var path = require('path');
 var bodyParser = require('body-parser');
 var swaggerJSDoc = require('swagger-jsdoc');
@@ -6,7 +9,9 @@ var swaggerJSDoc = require('swagger-jsdoc');
 var Todo = require(path.join(__dirname, 'models/todo'));
 var User = require(path.join(__dirname, 'models/user'));
 
-var mongoose = require('mongoose');
+
+
+
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL || 
@@ -18,6 +23,9 @@ mongoose.connect(process.env.MONGOLAB_URI ||
         console.log('connected to db.');
     });
 var routes = require(path.join(__dirname, 'routes/index.js'));
+
+
+
 
 // swagger definition
 var swaggerDefinition = {
@@ -32,19 +40,37 @@ var swaggerDefinition = {
 
 // options for the swagger docs
 var options = {
-  // import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // path to the API docs
   apis: ['./routes/*.js'],
 };
-
-// initialize swagger-jsdoc
 var swaggerSpec = swaggerJSDoc(options);
+
+
 
 
 var app = express();
 
-// serve swagger
+
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 2 * 60 * 60 * 1000 }
+}));
+
+app.get('/sid', function(req, res) {
+  var sess = req.session;
+  var sid = req.sessionID;
+  res.setHeader('Content-Type', 'text/html');
+  res.send('your sessionID ' + sid + ' ');
+});
+
+
+
+
+// generate swagger.json
 app.get('/swagger.json', function(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
@@ -57,7 +83,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 app.use(function(request, result) {
-  result.status(404).send({url: request.originalUrl + ' not found'})
+  result.status(404).send({url: request.originalUrl + ' not found'});
 });
 
 
