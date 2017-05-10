@@ -35,8 +35,9 @@ exports.delete = function(request, result) {
 	});
 };
 
+//'/api/users/:id/todos'
 exports.get_all = function(request, result) {
-	Todo.find({userId: request.params.userId}, function(error, todo) {
+	Todo.find({userId: request.params.id}, function(error, todo) {
 		if(error)
 			result.send(error);
 		result.json(todo);

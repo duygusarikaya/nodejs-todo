@@ -8,7 +8,10 @@ var TodoSchema = new mongoose.Schema({
 		type: String,
 		Required: 'Title is required.'
 	},
-	details: String,
+	details: {
+		type: String,
+		default: '...'
+	},
 	created_at: {
 		type: Date,
 		default: Date.now

@@ -21,7 +21,7 @@ var todos = require('../controllers/todoController');
  *          type: string
  *       title:
  *          type: string
- *       detail:
+ *       details:
  *          type: string
  *       created_at:
  *          type: string
@@ -85,9 +85,15 @@ router.post('/api/users', users.add);
  *     description: Returns all todos of the user
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: user's id
+ *         in: path
+ *         required: true
+ *         type: String
  *     responses:
  *       200:
- *         description: An array of users
+ *         description: An array of users' todos
  *         schema:
  *           $ref: '#/definitions/User'
  */
@@ -145,14 +151,20 @@ router.get('/api/todos/:id', todos.get);
  *     tags:
  *       - todos
  *     description: Updates a single todo entry
- *     produces: application/json
+ *     produces:
+ *       - application/json
  *     parameters:
- *       name: todo
- *       in: body
- *       description: Todo object
- *       schema:
- *         type: array
- *         $ref: '#/definitions/Todo'
+ *       - name: id
+ *         description: todo's id
+ *         in: path
+ *         required: true
+ *         type: String
+ *       - name: todo
+ *         description: Todo object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Todo'
  *     responses:
  *       200:
  *         description: Successfully updated
