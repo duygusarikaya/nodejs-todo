@@ -257,7 +257,7 @@ router.put('/api/todos/:id', todos.update);
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Todo entry's id
+ *         description: todo's id
  *         in: path
  *         required: true
  *         type: String
