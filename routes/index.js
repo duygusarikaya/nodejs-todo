@@ -67,7 +67,7 @@ router.get('/api/users', users.get_god_mode);
  *         schema:
  *           $ref: '#/definitions/Todo'
  */
-router.get('/api/users', todos.get_god_mode);
+router.get('/api/todos', todos.get_god_mode);
 
 /**
  * @swagger
@@ -273,7 +273,6 @@ router.put('/api/todos/:id', todos.update);
  *         description: Unauthorized
  */
 router.delete('/api/todos/:id', todos.delete);
-
 
 
 module.exports = router;

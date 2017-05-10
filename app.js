@@ -33,6 +33,7 @@ var swaggerDefinition = {
     description: 'The RESTful API of TodoApp',
   },
   host: 'https://agile-ocean-55991.herokuapp.com',
+  //host: 'localhost:3000',
   basePath: '/',
 };
 
