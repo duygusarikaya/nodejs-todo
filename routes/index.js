@@ -17,7 +17,7 @@ var todos = require('../controllers/todoController');
  *          format: password
   *   Todo:
  *     properties:
- *       userId:
+ *       user_id:
  *          type: string
  *       title:
  *          type: string
