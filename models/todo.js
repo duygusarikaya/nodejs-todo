@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var TodoSchema = new mongoose.Schema({
-	userId: {
+	user_id: {
 		type: String,
 		Required: 'User binding is required'
 	},
@@ -17,11 +17,9 @@ var TodoSchema = new mongoose.Schema({
 		default: Date.now
 	},
 	state: {
-		type: [{
-			type: String,
-			enum: ['open', 'inprogress', 'done']
-		}],
-		default: ['open']
+		type: String,
+		enum: ['open', 'inprogress', 'done'],
+		default: 'open'
 	}
 });
 mongoose.model('Todo', TodoSchema);

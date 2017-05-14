@@ -67,7 +67,7 @@ router.get('/api/users', users.get_god_mode);
  *         schema:
  *           $ref: '#/definitions/Todo'
  */
-router.get('/api/users', todos.get_god_mode);
+router.get('/api/todos', todos.get_god_mode);
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ router.post('/api/login', users.login);
  *         description: user's id
  *         in: path
  *         required: true
- *         type: String
+ *         type: string
  *       - name: Authorization
  *         description: apikey
  *         in: header
@@ -142,7 +142,7 @@ router.post('/api/login', users.login);
  *       200:
  *         description: An array of users' todos
  *         schema:
- *           $ref: '#/definitions/User'
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */
@@ -177,6 +177,8 @@ router.get('/api/users/:id/todos', todos.get_all);
  *     responses:
  *       200:
  *         description: Successfully created
+ *         schema:
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */
@@ -241,6 +243,8 @@ router.get('/api/todos/:id', todos.get);
  *     responses:
  *       200:
  *         description: Successfully updated
+ *         schema:
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */
@@ -257,7 +261,7 @@ router.put('/api/todos/:id', todos.update);
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Todo entry's id
+ *         description: todo's id
  *         in: path
  *         required: true
  *         type: String
@@ -273,7 +277,6 @@ router.put('/api/todos/:id', todos.update);
  *         description: Unauthorized
  */
 router.delete('/api/todos/:id', todos.delete);
-
 
 
 module.exports = router;
