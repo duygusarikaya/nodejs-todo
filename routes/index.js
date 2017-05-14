@@ -132,7 +132,7 @@ router.post('/api/login', users.login);
  *         description: user's id
  *         in: path
  *         required: true
- *         type: String
+ *         type: string
  *       - name: Authorization
  *         description: apikey
  *         in: header
@@ -142,7 +142,7 @@ router.post('/api/login', users.login);
  *       200:
  *         description: An array of users' todos
  *         schema:
- *           $ref: '#/definitions/User'
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */
@@ -177,6 +177,8 @@ router.get('/api/users/:id/todos', todos.get_all);
  *     responses:
  *       200:
  *         description: Successfully created
+ *         schema:
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */
@@ -241,6 +243,8 @@ router.get('/api/todos/:id', todos.get);
  *     responses:
  *       200:
  *         description: Successfully updated
+ *         schema:
+ *           $ref: '#/definitions/Todo'
  *       401:
  *         description: Unauthorized
  */

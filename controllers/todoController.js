@@ -8,10 +8,10 @@ exports.add = function(request, result) {
 		if(isAuthorized) {
 			var todo = new Todo(request.body);
 			todo.userId = request.params.id;
-			todo.save(function(error, todo) {
+			todo.save(function(error, t) {
 				if(error)
 					result.send(error); 
-				result.json(todo);
+				result.json(t);
 			});
 		} else {
 			result.status(401).send({cause: 'Unauthorized user'});
@@ -82,7 +82,7 @@ exports.get_all = function(request, result) {
 			Todo.find({userId: request.params.id}, function(error, todo) {
 				if(error)
 					result.send(error);
-				result.json(todo);
+				result.json({todos: todo});
 			});
 		} else {
 			result.status(401).send({cause: 'Unauthorized user'});
@@ -95,7 +95,7 @@ exports.get_god_mode = function(request, result) {
 	Todo.find({}, function(error, todo) {
 		if(error)
 			result.send(error); 
-		result.json(todo);
+		result.json({todos: todo});
 	});
 };
 
