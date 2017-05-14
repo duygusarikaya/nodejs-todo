@@ -38,39 +38,6 @@ var todos = require('../controllers/todoController');
 
 /**
  * @swagger
- * /api/users:
- *   get:
- *     tags:
- *       - dev
- *     description: Returns all users
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: An array of users
- *         schema:
- *           $ref: '#/definitions/User'
- */
-router.get('/api/users', users.get_god_mode);
-/**
- * @swagger
- * /api/todos:
- *   get:
- *     tags:
- *       - dev
- *     description: Returns all todos
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: An array of todos
- *         schema:
- *           $ref: '#/definitions/Todo'
- */
-router.get('/api/todos', todos.get_god_mode);
-
-/**
- * @swagger
  * /api/register:
  *   post:
  *     tags:
