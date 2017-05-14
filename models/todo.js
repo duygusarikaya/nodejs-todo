@@ -17,10 +17,10 @@ var TodoSchema = new mongoose.Schema({
 		default: Date.now
 	},
 	state: {
-		type: [{
+		type: {
 			type: String,
 			enum: ['open', 'inprogress', 'done']
-		}],
+		},
 		default: ['open']
 	}
 });
