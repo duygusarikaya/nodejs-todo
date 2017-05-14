@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var TodoSchema = new mongoose.Schema({
-	userId: {
+	user_id: {
 		type: String,
 		Required: 'User binding is required'
 	},
