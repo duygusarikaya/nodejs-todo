@@ -46,7 +46,7 @@ exports.update = function(request, result) {
 		checkAuthorization(request, user_id, function(isAuthorized) {
 			if(isAuthorized) {
 				request.body.user_id = user_id;
-				Todo.findOneAndUpdate(request.params.id, request.body, {new: true}, function(error, todo) {
+				Todo.findOneAndUpdate({_id: request.params.id}, request.body, {new: true}, function(error, todo) {
 					if(error)
 						result.send(error);
 					result.json(todo);
