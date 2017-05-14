@@ -7,7 +7,7 @@ exports.add = function(request, result) {
 	checkAuthorization(request, request.params.id, function(isAuthorized) {
 		if(isAuthorized) {
 			var todo = new Todo(request.body);
-			todo.userId = request.params.id;
+			todo.user_id = request.params.id;
 			todo.save(function(error, todo) {
 				if(error)
 					result.send(error); 
@@ -21,9 +21,9 @@ exports.add = function(request, result) {
 
 
 exports.get = function(request, result) {
-	findUserIdByTodoId(request.params.id, function(userId) {
-		//console.log('userId: '+userId);
-		checkAuthorization(request, userId, function(isAuthorized) {
+	findUserIdByTodoId(request.params.id, function(user_id) {
+		//console.log('user_id: '+user_id);
+		checkAuthorization(request, user_id, function(isAuthorized) {
 			if(isAuthorized) {
 				Todo.findById(request.params.id, function(error, todo) {
 					if(error)
@@ -41,11 +41,11 @@ exports.get = function(request, result) {
 };
 
 exports.update = function(request, result) {
-	findUserIdByTodoId(request.params.id, function(userId) {
-		//console.log('userId: '+userId);
-		checkAuthorization(request, userId, function(isAuthorized) {
+	findUserIdByTodoId(request.params.id, function(user_id) {
+		//console.log('user_id: '+user_id);
+		checkAuthorization(request, user_id, function(isAuthorized) {
 			if(isAuthorized) {
-				request.body.userId = userId;
+				request.body.user_id = user_id;
 				Todo.findOneAndUpdate(request.params.id, request.body, {new: true}, function(error, todo) {
 					if(error)
 						result.send(error);
@@ -59,9 +59,9 @@ exports.update = function(request, result) {
 };
 
 exports.delete = function(request, result) {
-	findUserIdByTodoId(request.params.id, function(userId) {
-		//console.log('userId: '+userId);
-		checkAuthorization(request, userId, function(isAuthorized) {
+	findUserIdByTodoId(request.params.id, function(user_id) {
+		//console.log('user_id: '+user_id);
+		checkAuthorization(request, user_id, function(isAuthorized) {
 			if(isAuthorized) {
 				Todo.remove({_id: request.params.id }, function(error, todo) {
 					if(error)
@@ -79,7 +79,7 @@ exports.delete = function(request, result) {
 exports.get_all = function(request, result) {
 	checkAuthorization(request, request.params.id, function(isAuthorized) {
 		if(isAuthorized) {
-			Todo.find({userId: request.params.id}, function(error, todo) {
+			Todo.find({user_id: request.params.id}, function(error, todo) {
 				if(error)
 					result.send(error);
 				result.json(todo);
@@ -99,8 +99,8 @@ exports.get_god_mode = function(request, result) {
 	});
 };
 
-function checkAuthorization(request, userId, fn){
-	User.findOne({_id: String(userId)}, function(error, user){
+function checkAuthorization(request, user_id, fn){
+	User.findOne({_id: String(user_id)}, function(error, user){
 		if(error)
 			fn(Boolean(false)); 
 		var auth = 'Basic ' + new Buffer(user.email + ':' + user.pass).toString('base64');
@@ -113,6 +113,6 @@ function findUserIdByTodoId(tid, fn) {
 	Todo.findById(tid, function(error, todo) {
 		if(error)
 			fn(error);
-		fn(todo.userId);
+		fn(todo.user_id);
 	});
 }
