@@ -17,11 +17,9 @@ var TodoSchema = new mongoose.Schema({
 		default: Date.now
 	},
 	state: {
-		type: {
-			type: String,
-			enum: ['open', 'inprogress', 'done']
-		},
-		default: ['open']
+		type: String,
+		enum: ['open', 'inprogress', 'done'],
+		default: 'open'
 	}
 });
 mongoose.model('Todo', TodoSchema);
