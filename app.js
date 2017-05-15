@@ -9,8 +9,7 @@ var swaggerJSDoc = require('swagger-jsdoc');
 var Todo = require(path.join(__dirname, 'models/todo'));
 var User = require(path.join(__dirname, 'models/user'));
 
-//var url = 'mongodb://localhost/todoapp-db';
-var url = 'mongodb://todoappdev:tdabyds1123@ds137441.mlab.com:37441/todoapp-db';
+var url = 'mongodb://localhost/todoapp-db';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(url,
@@ -32,8 +31,7 @@ var swaggerDefinition = {
     version: '1.0.0',
     description: 'The RESTful API of TodoApp',
   },
-  host: 'agile-ocean-55991.herokuapp.com',
-  //host: 'localhost:3000',
+  host: 'localhost:3000',
   basePath: '/',
 };
 
